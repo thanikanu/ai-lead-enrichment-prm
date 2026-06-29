@@ -1,6 +1,10 @@
+import os
 import pandas as pd
+from dotenv import load_dotenv
 
-DEMO_FOLDER = "x"
+load_dotenv()
+
+DEMO_FOLDER = os.getenv("DEMO_FOLDER", ".")
 
 leads_data = {
     "Company": [
@@ -34,6 +38,6 @@ leads_data = {
 }
 
 df = pd.DataFrame(leads_data)
-output_path = f"{DEMO_FOLDER}/mitrex_leads_input.xlsx"
+output_path = os.path.join(DEMO_FOLDER, "mitrex_leads_input.xlsx")
 df.to_excel(output_path, index=False)
 print(f"Input file created: {output_path}")
