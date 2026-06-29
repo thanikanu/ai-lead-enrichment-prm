@@ -4,10 +4,18 @@ import time
 import pandas as pd
 import anthropic
 import webbrowser
+from dotenv import load_dotenv
 
-DEMO_FOLDER = "Desired Folder to store files write name or document directory here"
+# Load environment variables from .env file
+load_dotenv()
 
-client = anthropic.Anthropic(api_key="ANTHROPIC_API_KEY")
+DEMO_FOLDER = os.getenv("DEMO_FOLDER", ".")
+
+api_key = os.getenv("ANTHROPIC_API_KEY")
+if not api_key:
+    raise ValueError("Missing ANTHROPIC_API_KEY. Add it to your .env file before running this script.")
+
+client = anthropic.Anthropic(api_key=api_key)
 
 def enrich_lead(company, contact, email, notes):
     response = client.messages.create(
